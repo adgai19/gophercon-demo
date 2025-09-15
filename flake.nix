@@ -17,6 +17,7 @@
       systems = [
         "x86_64-linux"
         "aarch64-darwin"
+        "aarch64-linux"
       ];
       perSystem =
         {
@@ -28,33 +29,6 @@
           ...
         }:
         {
-          devshells = {
-            go = {
-              packages = [
-                pkgs.bashInteractive
-                pkgs.go_1_25
-                pkgs.gofumpt
-                pkgs.golangci-lint
-                pkgs.gomodifytags
-                pkgs.protoc-gen-go-grpc
-                pkgs.gotests
-                pkgs.gotestsum
-                pkgs.protoc-gen-go
-                pkgs.iferr
-                pkgs.impl
-                pkgs.mockgen
-                pkgs.reftools
-                pkgs.richgo
-                pkgs.buf
-                pkgs.delve
-                pkgs.golines
-                pkgs.gotest
-                pkgs.gopls
-                pkgs.govulncheck
-                pkgs.air
-              ];
-            };
-          };
 
           packages.gophercon-demo = pkgs.buildGoModule {
             pname = "gophercon-demo";
@@ -70,11 +44,9 @@
           packages.gophercon-demo-image = pkgs.dockerTools.buildLayeredImage {
             name = "gophercon-demo";
             tag = "0.0.1";
-
             contents = [
               self'.packages.gophercon-demo
             ];
-
             config = {
               Cmd = [ "/bin/gophercon-demo" ];
             };
